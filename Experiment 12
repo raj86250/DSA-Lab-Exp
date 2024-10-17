@@ -1,0 +1,59 @@
+#include <stdio.h> 
+#include <string.h> 
+#include <ctype.h>
+#define SIZE 10
+#define MAX_WORD_LENGTH 50
+
+ int toLowerCase(char *str) { for (int i = 0; str[i]; i++) {
+str[i] = tolower((unsigned char)str[i]);
+}
+}
+
+
+int binarySearch(char *dictionary[], int size, char *target)
+{
+int left = 0;	int right = size - 1;
+
+while (left <= right) {
+int mid = left + (right - left) / 2;
+
+char lowerMid[MAX_WORD_LENGTH]; strcpy(lowerMid, dictionary[mid]); toLowerCase(lowerMid);
+
+char lowerTarget[MAX_WORD_LENGTH]; strcpy(lowerTarget, target);
+toLowerCase(lowerTarget);
+int comparison = strcmp(lowerMid, lowerTarget); if (comparison == 0) {
+return mid;
+}
+
+else if (comparison < 0) {
+    left = mid + 1;
+
+}
+else {
+right = mid - 1;
+}
+}
+return -1;
+}
+
+
+int main()
+{
+char *dictionary[SIZE] =
+{
+"Kiwi", "Banana", "Cherry", "Date", "Fig",
+"Grape", "Kiwi", "Mango", "Orange", "Voracious"
+};
+
+
+char target[MAX_WORD_LENGTH]; printf("This dictionary contains fruit names.\n"); printf("Enter the word to search for: ");
+scanf("%49s", target);
+int result = binarySearch(dictionary, SIZE, target); if (result != -1) {
+printf("The word '%s' was found at index %d.\n", target, result);
+} else {
+printf("The word '%s' was not found in the dictionary.\n", target);
+}
+
+
+return 0;
+}
